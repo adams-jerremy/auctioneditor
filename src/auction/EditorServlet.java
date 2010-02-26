@@ -84,9 +84,10 @@ public class EditorServlet extends HttpServlet {
         			return sb;
         		}
         	};
-        	resp.getWriter().println("<br> Watchlist: ");
-            resp.getWriter().println(Functional.mapReduce(watchList,watchListToStringBuilder,concatBuilders));
-            
+        	if(!watchList.isEmpty()){
+	        	resp.getWriter().println("<br> Watchlist: ");
+	            resp.getWriter().println(Functional.mapReduce(watchList,watchListToStringBuilder,concatBuilders));
+        	}
 
             resp.getWriter().println("<a href=\""+userService.createLogoutURL(req.getRequestURI()) +"\">Log Off</a>");
         	}finally{ pm.close();}

@@ -10,7 +10,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-class Email {
+class Email {//tracks users - Buyers and Sellers
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key key;
@@ -23,7 +23,7 @@ class Email {
 }
 
 @PersistenceCapable
-class Item {
+class Item { //temporary table for tracking items - needs to be expanded for seller page
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key key;
@@ -41,7 +41,7 @@ class Item {
 
 
 @PersistenceCapable
-class WatchList {
+class WatchList {//buyers watch list
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key key;
@@ -57,7 +57,7 @@ class WatchList {
     public void setItem(Key k) { this.item = k;}
 }
 @PersistenceCapable
-class Bid {
+class Bid {//saved bid history
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key key;
