@@ -57,7 +57,7 @@ public class LoggedInServlet extends HttpServlet {
     	
 //        Key seller;
     	*/
-        Seller greeting = new Seller(user.getUserId(), item, date, url, price);
+        Seller greeting = new Seller(user, item, date, url, price);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {

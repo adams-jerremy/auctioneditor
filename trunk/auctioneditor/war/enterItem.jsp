@@ -12,6 +12,7 @@
 <body>
 
 <%
+  
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
     if (user != null) {
@@ -20,11 +21,61 @@
 	href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign
 out</a>.)</p>
 
-<form action="/sign" method="post">
+<script type='text/javascript'>
+
+function checkForm() {
+	var item = document.getElementById('item');
+	var url = document.getElementById('url');
+	var price = document.getElementById('price');
+
+	if(notEmpty(item, "Please enter item name") && notEmpty(price, "Please enter price for item"))
+	{
+		if(isAlphanumeric(item, "Please enter only Numbers and Letters for item name"))
+		{
+			if(isNumeric(price, "Please enter a valid price")){
+				return true;
+			}
+		}
+	}
+	return false;
+
+}
+
+function isAlphanumeric(elem, helperMsg){
+	var alphaExp = /^[0-9a-zA-Z]+$/;
+	if(elem.value.match(alphaExp)){
+		return true;
+	}else{
+		alert(helperMsg);
+		elem.focus();
+		return false;
+	}
+}
+function notEmpty(elem, helperMsg){
+	if(elem.value.length == 0){
+		alert(helperMsg);
+		elem.focus(); // set the focus to this input
+		return false;
+	}
+	return true;
+}
+
+function isNumeric(elem, helperMsg){
+	var numericExpression = /^[0-9]+.?[0-9]+$/;
+	if(elem.value.match(numericExpression)){
+		return true;
+	}else{
+		alert(helperMsg);
+		elem.focus();
+		return false;
+	}
+}
+</script>
+<form name="itemForm"  method="post" onsubmit="return checkForm()" action="/sign"> 
 <!-- <div><textarea name="content" rows="3" cols="60"></textarea></div> -->
-<div> Item name: <input type="text" name="item"></input></div>
-<div> Url for Item: <input type="text" name="url"></input></div>
-<div> Price for Item: <input type="text" name="price"></input></div>
+<div> Item name: <input type="text" name="item" id="item"></input></div>
+<div> Url for Item: <input type="text" name="url" id="url"></input></div>
+<div> Price for Item: <input type="text" name="price" id="price"></input></div>
 
 <div><input type="submit" value="Submit Item" /></div>
 </form>
@@ -45,7 +96,7 @@ out</a>.)</p>
 		PersistenceManager pm = auction.PMF.get().getPersistenceManager();
 		Query query = pm.newQuery( auction.Seller.class);
 //		Query query = pm.newQuery("select id from" + auction.Seller.class);
-		query.setFilter("seller == uid");
+		query.setFilter("sellerID == uid");
 		query.declareParameters("String uid");
 	
 		//List<auction.Seller> sellers = (List<auction.Seller>) pm.newQuery(query).execute();
@@ -58,13 +109,14 @@ out</a>.)</p>
 					%> <tr> <%
 					%> <td> <%= s.getItem()  %> </td><%
 					%> <td> <%= s.getPrice()  %> </td> <%
-					%> <td> <%= s.getUrl()  %> </td> <%
+					%> <td> <a href = "<%= s.getUrl()  %>" ><%= s.getUrl()  %></a> </td> <%
 					%> </tr> <%
 				}
 			}
 
 	%>
 	</table>
+	<!-- IFRAME SRC="http://z.cs.utexas.edu/users/varunjn/AustinBikeAuction/bike1.html" TITLE="My other page" NAME="otherpage" FRAMEBORDER="0" WIDTH="50%" HEIGHT="100">Alternate content for non-supporting browsers, probably a link to the same info</IFRAME-->
 <%
 	//  }
     } else {
@@ -78,3 +130,4 @@ in</a> to enter item.</p>
 
 </body>
 </html>
+
