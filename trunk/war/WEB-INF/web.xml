@@ -7,6 +7,21 @@
 
 	<!-- Servlets -->
 	<servlet>
+      <servlet-name>editor</servlet-name>
+      <servlet-class>auction.EditorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>editor</servlet-name>
+      <url-pattern>/editor</url-pattern>
+    </servlet-mapping><servlet>
+  	  <servlet-name>bid</servlet-name>
+  	  <servlet-class>auction.BidServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+  	  <servlet-name>bid</servlet-name>
+  	  <url-pattern>/bid</url-pattern>
+    </servlet-mapping>
+	<servlet>
 		<servlet-name>login</servlet-name>
 		<servlet-class>auction.loginServlet</servlet-class>
 	</servlet>
@@ -17,7 +32,9 @@
 
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>auction.server.GreetingServiceImpl</servlet-class>
+		<servlet-class>
+			auction.server.GreetingServiceImpl
+		</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -36,7 +53,7 @@
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
-		<welcome-file>/enterItem.jsp</welcome-file>
+		<welcome-file>../enterItem.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>
