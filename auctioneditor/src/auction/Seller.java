@@ -18,7 +18,7 @@ public class Seller {
     private Key key;
 
     @Persistent
-    private User seller;
+    private String seller;
 
     @Persistent
     private String item;
@@ -32,7 +32,7 @@ public class Seller {
     @Persistent
     private String price;
     
-    public Seller(User seller, String item, Date date, String url, String price) {
+    public Seller(String seller, String item, Date date, String url, String price) {
         this.seller = seller;
         this.item = item;
         this.date = date;
@@ -45,7 +45,7 @@ public class Seller {
     }
 
     public String getSeller() {
-        return seller.getUserId().toString() ;
+        return seller ;
     }
 
     public String getItem() {
@@ -64,7 +64,7 @@ public class Seller {
     	return price;
     }
     
-    public void setSeller(User seller) {
+    public void setSeller(String seller) {
         this.seller = seller;
     }
 
