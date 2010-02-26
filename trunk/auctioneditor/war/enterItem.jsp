@@ -5,6 +5,8 @@
 <%@ page import="javax.jdo.PersistenceManager"%>
 <%@ page import="java.util.List"%>
 <%@ page import="auction.Seller"%>
+<%@ page import="javax.jdo.Query"%>
+
 
 <html>
 <body>
@@ -28,24 +30,43 @@ out</a>.)</p>
 </form>
 
 <% 
-	String query = "select from " + auction.Seller.class.getName();///+ " where seller == " + user.getUserId().toString();
-	PersistenceManager pm = auction.PMF.get().getPersistenceManager();
-	List<auction.Seller> sellers = (List<auction.Seller>) pm.newQuery(query).execute();
-	if (!sellers.isEmpty()) {
+/*PersistenceManager pmUser = auction.PMF.get().getPersistenceManager();
+	Query queryUser = pmUser.newQuery("select id from" + auction.UserInfo.class);
+	queryUser.setFilter("userid == uid");
+	queryUser.declareParameters("String uid");
+	List userKeys = (List) queryUser.execute(user.getUserId());
+	pmUser.close();
+		if( !userKeys.isEmpty() )
+			{
+			String ukey = userKeys.toString();		
+	*/
+		
+		//String query = "select from " + auction.Seller.class.getName()+ " where seller == " + user.getUserId();
+		PersistenceManager pm = auction.PMF.get().getPersistenceManager();
+		Query query = pm.newQuery( auction.Seller.class);
+//		Query query = pm.newQuery("select id from" + auction.Seller.class);
+		query.setFilter("seller == uid");
+		query.declareParameters("String uid");
+	
+		//List<auction.Seller> sellers = (List<auction.Seller>) pm.newQuery(query).execute();
+		List<auction.Seller> sellers = (List<auction.Seller>) query.execute(user.getUserId());
+			if (!sellers.isEmpty()) {
 %>
-	<table>
-	<%
-		for (Seller s : sellers) {
-			%> <tr> <%
-			%> <td> <%= s.getItem()  %> </td><%
-			%> <td> <%= s.getPrice()  %> </td> <%
-			%> <td> <%= s.getUrl()  %> </td> <%
-			%> </tr> <%
-		}
-	}
+		<table>
+		<%	
+				for (Seller s : sellers) {
+					%> <tr> <%
+					%> <td> <%= s.getItem()  %> </td><%
+					%> <td> <%= s.getPrice()  %> </td> <%
+					%> <td> <%= s.getUrl()  %> </td> <%
+					%> </tr> <%
+				}
+			}
+
 	%>
 	</table>
 <%
+	//  }
     } else {
 %>
 <p>Hello! <a
