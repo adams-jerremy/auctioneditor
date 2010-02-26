@@ -101,11 +101,16 @@ function isNumeric(elem, helperMsg){
 	
 		//List<auction.Seller> sellers = (List<auction.Seller>) pm.newQuery(query).execute();
 		List<auction.Seller> sellers = (List<auction.Seller>) query.execute(user.getUserId());
-			if (!sellers.isEmpty()) {
+			if (!sellers.isEmpty()) { 
 %>
 		<table>
-		<%	
-				for (Seller s : sellers) {
+		<tr>
+		<td><b>Item</b></td>
+		<td><b>Price</b></td>
+		<td><b>Link to Page</b></td>
+		</tr>
+		<%
+			for (Seller s : sellers) {
 					%> <tr> <%
 					%> <td> <%= s.getItem()  %> </td><%
 					%> <td> <%= s.getPrice()  %> </td> <%
