@@ -28,36 +28,36 @@ public class LoggedInServlet extends HttpServlet {
         String url = req.getParameter("url");
         String price = req.getParameter("price");
         
-        /*
         PersistenceManager pmUser = auction.PMF.get().getPersistenceManager();
-    	Query query = pmUser.newQuery("select id from" + auction.UserInfo.class);
-    	query.setFilter("userid == uid");
-    	query.declareParameters("String uid");
+    	Query query = pmUser.newQuery(auction.Email.class);
+    	query.setFilter("email == uemail");
+    	query.declareParameters("String uemail");
     	
-    	//List<auction.Seller> sellers = (List<auction.Seller>) pm.newQuery(query).execute();
-    	List userKeys = (List) query.execute(user.getUserId());
-        
-    	if(userKeys.isEmpty())
+    	Email currentUser = null;
+    	
+    	List<Email> users = (List<Email>) query.execute(user.getEmail());
+      
+    	if(users.isEmpty())
     	{
-    		UserInfo newUser = new UserInfo(user);
-    		PersistenceManager pmU = PMF.get().getPersistenceManager();
+//    		UserInfo newUser = new UserInfo(user);
+    		Email newUser = new Email(user.getEmail());
+//    		PersistenceManager pmU = PMF.get().getPersistenceManager();
     		try
     		{
-    			pmU.makePersistent(newUser);	
+    			pmUser.makePersistent(newUser);	
+    			currentUser = newUser;
     		}
     		finally 
     		{
-    			pmU.close();
+    			pmUser.close();
     		}
-    		userKeys = (List) query.execute(user.getUserId());
     	}
-    	Key userKey = (Key)userKeys.get(0);
-    	pmUser.close();
-    	System.out.print(userKey);
-    	
-//        Key seller;
-    	*/
-        Seller greeting = new Seller(user, item, date, url, price);
+    	else
+    	{
+    		currentUser = users.get(0);
+    	}
+  	
+        Seller greeting = new Seller(currentUser.getKey(), item, date, url, price);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {
@@ -67,5 +67,6 @@ public class LoggedInServlet extends HttpServlet {
 
          resp.sendRedirect("/enterItem.jsp");
         }
+        
     }
 }

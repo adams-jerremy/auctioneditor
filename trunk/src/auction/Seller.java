@@ -18,10 +18,10 @@ public class Seller {
     private Key key;
 
     @Persistent
-    private User seller;
+    private Key seller;
     
-    @Persistent
-    private String sellerID;
+//    @Persistent
+//    private String sellerID;
 
     @Persistent
     private String item;
@@ -35,9 +35,9 @@ public class Seller {
     @Persistent
     private String price;
     
-    public Seller(User seller, String item, Date date, String url, String price) {
+    public Seller(Key seller, String item, Date date, String url, String price) {
         this.seller = seller;
-        this.sellerID = seller.getUserId();
+        //this.sellerID = seller.getUserId();
         this.item = item;
         this.date = date;
         this.url = url;
@@ -48,13 +48,13 @@ public class Seller {
         return key;
     }
 
-    public User getSeller() {
+    public Key getSeller() {
         return seller ;
     }
     
-    public String getSellerID() {
-    	return sellerID;
-    }
+//    public String getSellerID() {
+//    	return sellerID;
+//    }
 
     public String getItem() {
         return item;
@@ -72,13 +72,13 @@ public class Seller {
     	return price;
     }
     
-    public void setSeller(User seller) {
+    public void setSeller(Key seller) {
         this.seller = seller;
     }
 
-    public void setSellerID(String sellerID) {
-        this.sellerID = sellerID;
-    }
+//    public void setSellerID(String sellerID) {
+//        this.sellerID = sellerID;
+//    }
 
     public void setItem(String item) {
         this.item = item;
