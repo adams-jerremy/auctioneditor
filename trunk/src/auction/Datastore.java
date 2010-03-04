@@ -9,14 +9,17 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
 
+//-------
+// MOVED EMAIL OUT to a new File
+//--------
 @PersistenceCapable
-class Email {//tracks users - Buyers and Sellers
+class Emaila {//tracks users - Buyers and Sellers
     @PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key key;
     @Persistent
     private String email;
-    public Email(String e) { email = e;}
+    public Emaila(String e) { email = e;}
     public Key getKey() { return key; }
     public String getEmail() { return email; }
     public void setEmail(String e) { this.email = e;}
