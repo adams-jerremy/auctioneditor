@@ -6,14 +6,16 @@
 <web-app>
 
 	<!-- Servlets -->
-	<servlet>
+	 <servlet>
       <servlet-name>editor</servlet-name>
       <servlet-class>auction.EditorServlet</servlet-class>
     </servlet>
     <servlet-mapping>
       <servlet-name>editor</servlet-name>
-      <url-pattern>/editor</url-pattern>
-    </servlet-mapping><servlet>
+      <url-pattern>/editor</url-pattern> 
+    </servlet-mapping>
+        
+    <servlet>
   	  <servlet-name>bid</servlet-name>
   	  <servlet-class>auction.BidServlet</servlet-class>
     </servlet>
@@ -21,6 +23,7 @@
   	  <servlet-name>bid</servlet-name>
   	  <url-pattern>/bid</url-pattern>
     </servlet-mapping>
+    
 	<servlet>
 		<servlet-name>login</servlet-name>
 		<servlet-class>auction.loginServlet</servlet-class>
@@ -53,7 +56,7 @@
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
-		<welcome-file>../enterItem.jsp</welcome-file>
+		<welcome-file>/enterItem.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>
