@@ -1,4 +1,4 @@
-package auction;
+package datastore;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;

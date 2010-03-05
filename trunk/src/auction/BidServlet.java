@@ -3,19 +3,21 @@ package auction;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
 import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-
-import javax.jdo.Query;
-
-import javax.servlet.http.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+
+import datastore.Bid;
+import datastore.Email;
 
 public class BidServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(BidServlet.class.getName());

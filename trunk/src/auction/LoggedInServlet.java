@@ -15,6 +15,9 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+import datastore.Email;
+import datastore.Seller;
+
 public class LoggedInServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(LoggedInServlet.class.getName());
 
@@ -29,7 +32,7 @@ public class LoggedInServlet extends HttpServlet {
         String price = req.getParameter("price");
         
         PersistenceManager pmUser = auction.PMF.get().getPersistenceManager();
-    	Query query = pmUser.newQuery(auction.Email.class);
+    	Query query = pmUser.newQuery(datastore.Email.class);
     	query.setFilter("email == uemail");
     	query.declareParameters("String uemail");
     	
