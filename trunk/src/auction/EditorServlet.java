@@ -12,6 +12,9 @@ import utils.BinaryFunctor;
 import utils.Functional;
 import utils.UnaryFunctor;
 
+import auction.datastore.Email;
+import auction.datastore.WatchList;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -22,8 +25,6 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import datastore.Email;
-import datastore.WatchList;
 
 public class EditorServlet extends HttpServlet {
 
@@ -41,7 +42,7 @@ public class EditorServlet extends HttpServlet {
         if (user != null) {
         	final PersistenceManager pm = PMF.get().getPersistenceManager();
         	try{
-        	//pm.makePersistent(new Item("Item2",KeyFactory.stringToKey("aglub19hcHBfaWRyCwsSBUVtYWlsGAUM")));
+        	pm.makePersistent(new Item("Item2",KeyFactory.stringToKey("aglub19hcHBfaWRyCwsSBUVtYWlsGAUM")));
             resp.setContentType("text/HTML");
             resp.getWriter().println("Hello, " + user.getNickname()+"<br>");
             
@@ -77,7 +78,7 @@ public class EditorServlet extends HttpServlet {
         		public StringBuilder apply(WatchList wl){
         			String query = "select from "+Item.class.getName()+" where key == "+KeyFactory.keyToString(wl.getItem());
                 	Item item = ((List<Item>)pm.newQuery(query).execute()).get(0);
-                	query = "select from "+Email.class.getName()+" where key == "+KeyFactory.keyToString(item.getSeller());
+                	query = "select from "+auction.datastore.Email.class.getName()+" where key == "+KeyFactory.keyToString(item.getSeller());
                 	Email seller = ((List<Email>)pm.newQuery(query).execute()).get(0); 
         			StringBuilder sb = new StringBuilder();
         			sb.append("<br>").append(item.getName()).append(" From: ").append(seller.getEmail())
