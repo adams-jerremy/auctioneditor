@@ -1,4 +1,4 @@
-package auction;
+package datastore;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.users.User;

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utils.BinaryFunctor;
-import utils.UnaryFunctor;
 import utils.Functional;
+import utils.UnaryFunctor;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -21,6 +21,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+
+import datastore.Email;
+import datastore.WatchList;
 
 public class EditorServlet extends HttpServlet {
 
