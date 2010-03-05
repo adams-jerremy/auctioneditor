@@ -10,14 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import auction.datastore.Bid;
+import auction.datastore.Email;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import datastore.Bid;
-import datastore.Email;
 
 public class BidServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(BidServlet.class.getName());
