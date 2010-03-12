@@ -1,6 +1,9 @@
 package auction;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import auction.datastore.Bid;
-import auction.datastore.Email;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -28,13 +30,19 @@ public class BidServlet extends HttpServlet {
         User user = userService.getCurrentUser();
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {
-	        String query = "select key from "+Email.class.getName()+" where email == \""+user.getEmail()+"\"";
+	        String query = "select key from "+auction.datastore.Email.class.getName()+" where email == \""+user.getEmail()+"\"";
 	        Key userKey = ((List<Key>)pm.newQuery(query).execute()).get(0);
 	        String item = req.getParameter("item");
-	        Date date = new Date();
 	        int price = Integer.parseInt(req.getParameter("bid"));
-	        Bid bid = new Bid(userKey, KeyFactory.stringToKey(item), price, date);        
+	        Bid bid = new Bid(userKey, KeyFactory.stringToKey(item), price, new Date());        
 	        pm.makePersistent(bid);
-        } finally { pm.close();resp.sendRedirect("/guestbook");}
+	        StringBuilder sb = new StringBuilder("http://porco-rosso.cs.utexas.edu:8083/submitBid?itemId=").append(item).append("&price=").append(price).append("&userId=").append(KeyFactory.keyToString(userKey));
+	        URL url = new URL(sb.toString());
+	        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.connect();
+	        conn.getInputStream();
+	        System.err.println(conn.getURL());
+        } finally { pm.close();resp.sendRedirect("/editor");}
     }
 }
