@@ -144,6 +144,13 @@ function deleteRow(tableID)
 	}
 }
 
+function sendFile()
+{
+
+	
+	return true;
+}
+
 </script>
 
 <%
@@ -178,6 +185,11 @@ out</a>.)</p>
 </table>
 <div><input type="submit" value="Submit Item" /> </div>
 </form>
+
+<FORM method="post" action="/upload" onsubmit="return sendFile()" enctype="multipart/form-data">
+<INPUT TYPE="file" name="uFile" id="uFile">
+<div><input type="submit" value="Submit file" /> </div>
+</FORM>
 
 <% 
 	PersistenceManager pmUser = auction.PMF.get().getPersistenceManager();
