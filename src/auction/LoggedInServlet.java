@@ -3,6 +3,8 @@ package auction;
 import auction.datastore.*;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +12,8 @@ import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 import javax.jdo.Query;
 
 import javax.servlet.http.*;
@@ -71,10 +75,32 @@ public class LoggedInServlet extends HttpServlet {
         	PersistenceManager pm = PMF.get().getPersistenceManager();
         	try {
         		pm.makePersistent(greeting);
+        	} catch(Exception ex){
+        		System.out.println(ex);
         	} finally {
         		pm.close();
         	}
+      	
+        	/* ******
+        	 // connect to light streamer //  128.62.230.89:8081
+        	try
+        	{
+        		StringBuilder sb = new StringBuilder("http://128.62.235.184:8081/submitBid?itemId=").append(item).append("&price=").append(price).append("&userId=").append(KeyFactory.keyToString(currentUser.getKey()));
+        		URL urlconn = new URL(sb.toString());
+        		HttpURLConnection conn = (HttpURLConnection)urlconn.openConnection();
+        		conn.setRequestMethod("POST");
+        		conn.connect();
+        		conn.getInputStream();
+        		System.err.println(conn.getURL());
+        	}
+        	catch(Exception ex)
+        	{
+        		System.out.println(ex);
+        	}
+        	finally
+        	{}
+        	********* */
     	}	
-        resp.sendRedirect("/enterItem.jsp");        
+       // resp.sendRedirect("/enterItem.jsp");        
     }
 }
