@@ -33,17 +33,6 @@
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>
-			auction.server.GreetingServiceImpl
-		</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/auctioneditor/greet</url-pattern>
-	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>sign</servlet-name>
@@ -61,6 +50,15 @@
 	<servlet-mapping>
 		<servlet-name>upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GetSellerItems</servlet-name>
+		<servlet-class>auction.GetSellerItems</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetSellerItems</servlet-name>
+		<url-pattern>/getSellerItems</url-pattern>
 	</servlet-mapping>
 
 

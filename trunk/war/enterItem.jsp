@@ -15,7 +15,35 @@
 
 <script type='text/javascript'>
 
+function sendItemToServer()
+{
+	if(checkForm())
+	{
+		xmlhttpLogin=getXmlHttpObject();
+		if (xmlhttp==null)
+	  	{
+	  		alert ("Your browser does not support AJAX!");
+	  		return;
+	  	}
+	  	var url="/sign";
+	  	xmlhttpLogin.onreadystatechange=loginStateChanged;
+	  	xmlhttpLogin.open("POST",url,true);
+	  	xmlhttpLogin.send(null);		
+	}		
+}
+function loginStateChanged()
+{
+	function stateChanged()
+	{
+		if (xmlhttpLogin.readyState==4)
+	  	{
+			document.getElementById("dump").innerHTML=xmlhttpLogin.responseText;
+	  	}
+	}
+		
+}
 function checkForm() {
+	//showItems();
 	var numItems = document.getElementById('numItems');
 	var headRow = 1;
 	for( var i=1; i< headRow + numItems.getAttribute('value'); ++i)
@@ -144,10 +172,46 @@ function deleteRow(tableID)
 	}
 }
 
+function getXmlHttpObject()
+{
+	if (window.XMLHttpRequest)
+	  {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  return new XMLHttpRequest();
+	  }
+	if (window.ActiveXObject)
+	  {
+	  // code for IE6, IE5
+	  return new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	return null;
+}
+
+function showItems()
+{
+	xmlhttp=getXmlHttpObject();
+	if (xmlhttp==null)
+  	{
+  		alert ("Your browser does not support AJAX!");
+  		return;
+  	}
+  	var url="/getSellerItems";
+  	xmlhttp.onreadystatechange=stateChanged;
+  	xmlhttp.open("POST",url,true);
+  	xmlhttp.send(null);
+	
+}
+
+function stateChanged()
+{
+	if (xmlhttp.readyState==4)
+  	{
+  		document.getElementById("sellerItems").innerHTML=xmlhttp.responseText;
+  	}
+}
+
 function sendFile()
 {
-
-	
 	return true;
 }
 
@@ -163,7 +227,8 @@ function sendFile()
 	href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign
 out</a>.)</p>
 
-<form name="itemForm"  method="post" onsubmit="return checkForm()" action="/sign"> 
+<iframe id="formSubmit" name="formSubmit" height="0" width="0"  frameborder="0" onload="showItems()"></iframe>
+<form name="itemForm"  method="post" target="formSubmit" onsubmit="sendItemToServer()" action="/sign"> 
 <!-- <div><textarea name="content" rows="3" cols="60"></textarea></div> -->
 
 <INPUT type="button" value="Add Row" onclick="addRow('addTable')" />
@@ -185,67 +250,16 @@ out</a>.)</p>
 </table>
 <div><input type="submit" value="Submit Item" /> </div>
 </form>
+<div id="dump"></div>
 
-<FORM method="post" action="/upload" onsubmit="return sendFile()" enctype="multipart/form-data">
+<FORM method="post" action="/upload" target="uploadFile" onsubmit="return sendFile()" enctype="multipart/form-data">
 <INPUT TYPE="file" name="uFile" id="uFile">
 <div><input type="submit" value="Submit file" /> </div>
 </FORM>
+<iframe id="uploadFile" name="uploadFile" height="0" width="0" frameborder="0"></iframe>
+<div id="sellerItems" > Seller Items: </div>
+<%
 
-<% 
-	PersistenceManager pmUser = auction.PMF.get().getPersistenceManager();
-	Query queryUser = pmUser.newQuery( Email.class);
-	queryUser.setFilter("email == uemail");
-	queryUser.declareParameters("String uemail");
-	  try
-	  {
-		List<Email> emails = (List<Email>) queryUser.execute(user.getEmail());
-		Email currentEmail = null;
-	
-		if( !emails.isEmpty() )
-		{
-			currentEmail = emails.get(0);	
-			//String query = "select from " + auction.Seller.class.getName()+ " where seller == " + user.getUserId();
-			PersistenceManager pm = auction.PMF.get().getPersistenceManager();
-			Query query = pm.newQuery( Seller.class);
-//			Query query = pm.newQuery("select id from" + auction.Seller.class);
-			query.setFilter("seller == ukey");
-			query.declareParameters("String ukey");
-		String qry = "select from " + Seller.class.getName() + " where seller == " + KeyFactory.keyToString(currentEmail.getKey());
-			//List<auction.Seller> sellers = (List<auction.Seller>) pm.newQuery(query).execute();
-List<Seller> sellers = (List<Seller>)pm.newQuery(qry).execute();
-			//List<auction.Seller> sellers = (List<auction.Seller>) query.execute(KeyFactory.keyToString(currentEmail.getKey()));
-			if (!sellers.isEmpty()) 
-			{ 
-%>
-
-			<table>
-			<tr>
-			<td><b>Item</b></td>
-			<td><b>Price</b></td>
-			<td><b>Link to Page</b></td>
-			</tr>
-			<%
-				for (Seller s : sellers) 
-				{
-					%> <tr> <%
-					%> <td> <%= s.getItem()  %> </td><%
-					%> <td> <%= s.getPrice()  %> </td> <%
-					%> <td> <a href = "<%= s.getUrl()  %>" ><%= s.getUrl()  %></a> </td> <%
-					%> </tr> <%
-				}
-			%>
-			</table>
-
-
-			<!-- IFRAME SRC="http://z.cs.utexas.edu/users/varunjn/AustinBikeAuction/bike1.html" TITLE="My other page" NAME="otherpage" FRAMEBORDER="0" WIDTH="50%" HEIGHT="100">Alternate content for non-supporting browsers, probably a link to the same info</IFRAME-->
-		<%
-			}		
-		}
-	  }
-	  finally
-	  {
-		  queryUser.closeAll();
-	  }
 	}
     else 
     {
