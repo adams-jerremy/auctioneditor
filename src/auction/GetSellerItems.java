@@ -50,15 +50,17 @@ public class GetSellerItems extends HttpServlet {
         			//List<auction.Seller> sellers = (List<auction.Seller>) query.execute(KeyFactory.keyToString(currentEmail.getKey()));
         			if (!sellers.isEmpty()) 
         			{ 
-        				resp.getWriter().println(" <table> " +
+        				resp.getWriter().println(" <table cellpadding=\"5\"> " +
         						"<tr> " +
-        						"<td><b>Item</b></td>" +
+        						"<td><b>Item# </b></td>" +
+        						"<td><b>Item Name </b></td>" +
         						"<td><b>Price</b></td>" +
         						"<td><b>Link to Page</b></td>" +
         						"</tr> ");
         				for (Seller s : sellers) 
         				{
         					resp.getWriter().println(" <tr> " +
+        							"<td> " + s.getKey().getId() + "</td>" +
         							"<td> " + s.getItem() + "</td>" +
         							"<td> " + s.getPrice() + "</td>" +
         							"<td> <a href = " + s.getUrl() + ">" + s.getUrl() + "</a> </td>" +
