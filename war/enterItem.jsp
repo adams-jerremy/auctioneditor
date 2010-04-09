@@ -15,12 +15,11 @@
 
 <script type='text/javascript'>
 
-function sendItemToServer()
-{
+function sendItemToServer() {
 	if(checkForm())
 	{
 		xmlhttpLogin=getXmlHttpObject();
-		if (xmlhttp==null)
+		if (xmlhttp === null)
 	  	{
 	  		alert ("Your browser does not support AJAX!");
 	  		return;
@@ -31,8 +30,7 @@ function sendItemToServer()
 	  	xmlhttpLogin.send(null);		
 	}		
 }
-function loginStateChanged()
-{
+function loginStateChanged() {
 	function stateChanged()
 	{
 		if (xmlhttpLogin.readyState==4)
@@ -89,7 +87,7 @@ function isAlphanumeric(elem, helperMsg){
 	}
 }
 function notEmpty(elem, helperMsg){
-	if(elem.value.length == 0){
+	if(elem.value.length === 0){
 		alert(helperMsg);
 		elem.focus(); // set the focus to this input
 		return false;
@@ -152,8 +150,7 @@ function addRow(tableID) {
     
 }
 
-function deleteRow(tableID) 
-{
+function deleteRow(tableID) {
 	try 
 	{
 		var table = document.getElementById(tableID);
@@ -172,8 +169,7 @@ function deleteRow(tableID)
 	}
 }
 
-function getXmlHttpObject()
-{
+function getXmlHttpObject() {
 	if (window.XMLHttpRequest)
 	  {
 	  // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -187,8 +183,7 @@ function getXmlHttpObject()
 	return null;
 }
 
-function showItems()
-{
+function showItems() {
 	xmlhttp=getXmlHttpObject();
 	if (xmlhttp==null)
   	{
@@ -202,16 +197,15 @@ function showItems()
 	
 }
 
-function stateChanged()
-{
+function stateChanged() {
 	if (xmlhttp.readyState==4)
   	{
   		document.getElementById("sellerItems").innerHTML=xmlhttp.responseText;
+  		
   	}
 }
 
-function sendFile()
-{
+function sendFile() {
 	return true;
 }
 
