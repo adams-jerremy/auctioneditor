@@ -6,6 +6,26 @@
 <web-app>
 
 	<!-- Servlets -->
+	<context-param>
+		<param-name>org.restlet.application</param-name>
+		<param-value>
+			auction.AuctionApplication
+       </param-value>
+	</context-param>
+
+	<!-- Restlet adapter -->
+	<servlet>
+		<servlet-name>RestletServlet</servlet-name>
+		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+	</servlet>
+
+	<!-- Catch all requests -->
+	<servlet-mapping>
+		<servlet-name>RestletServlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+
 	 <servlet>
       <servlet-name>editor</servlet-name>
       <servlet-class>auction.EditorServlet</servlet-class>
