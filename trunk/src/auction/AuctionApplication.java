@@ -17,7 +17,12 @@ public class AuctionApplication extends Application {
 
         // Defines only one route
        // router.attachDefault(HelloWorldResource.class);
-        router.attach("/sellers/{seller}", SellerResource.class);  
+        router.attach("/sellers/{seller}", SellerResource.class);
+        router.attach("/items/create", ItemsResource.class);
+        router.attach("/items/read", ItemsResource.class);
+        router.attach("/items/item_id/update", ItemsResource.class);
+        router.attach("/items/item_id/delete", ItemsResource.class);
+        router.attach("/items/item_id/read", ItemsResource.class);
         return router;
     }
 }

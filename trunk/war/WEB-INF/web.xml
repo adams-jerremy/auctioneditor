@@ -19,7 +19,7 @@
 		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
 	</servlet>
 
-	<!-- Catch all requests -->
+	<!-- Catch all Restlet requests -->
 	<servlet-mapping>
 		<servlet-name>RestletServlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
